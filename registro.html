@@ -109,7 +109,7 @@ async function registrar() {
     }
 
     try {
-        const resp = await fetch("http://localhost:5134/api/Usuarios/registrar", {
+        const resp = await fetch("https://localhost:7029/api/Usuarios", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

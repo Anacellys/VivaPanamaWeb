@@ -5,18 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VivaPanama</title>
     <link rel="stylesheet" href="css/estilo.css"> 
-    <script src="eee.js"></script>
+    <!-- Añadir auth.js -->
+    <script src="js/auth.js"></script>
 </head>
 <body>
 
 <header class="navbar">
     <div class="logo">VivaPanama</div>
-    <nav>
-        <a href="#">Inicio</a>
-        <a href="login.html">Lugares</a>
-        <a href="#">Explorar</a>
-        <a href="#"> Ver Itinerario </a> 
-        <a href="#"> Mi Perfil </a>
+    <nav id="nav-menu">
+        <a href="index.html">Inicio</a>
+        <a href="lugares.html">Lugares</a>
+        <a href="actividades.html">Actividades</a>
+        <!-- Estos enlaces cambian según login -->
+        <a href="#" id="link-hoteles" onclick="verHoteles()">Hoteles</a>
+        <a href="#" id="link-itinerario" onclick="verItinerario()">Mi Itinerario</a>
+        <a href="#" id="link-perfil" onclick="verPerfil()">Mi Perfil</a>
+        <!-- Espacio para info de usuario (se llena con JS) -->
+        <span id="user-info"></span>
     </nav>
 </header>
 
@@ -24,34 +29,142 @@
     Descubre Panamá
 </section>
 
-<section class="contenedor">
-   
-
-    <div class="card">
-       <!--<img src="img/hotel2.jpg" alt="Hotel 2"> --> 
-        <div class="info">
-            <h3>Hotel ejem</h3>
-            <p>Ambiente relajado y vista panorámica.</p>
-        </div>
-    </div>
-    <!--  aqui donde debe llamar desde la api para que carge los cuadro -->
-
-    
+<section class="contenedor" id="contenedor-hoteles">
+    <!-- Aquí se cargarán los hoteles desde la API -->
+</section>
 
 <footer>
     © 2025 VivaPanama – Todos los derechos reservados
 </footer>
 
-</body> 
-<!-- MODAL FLOTANTE -->
-<div id="modal-acceso" class="modal-fondo">
+<!-- MODAL FLOTANTE - SOLO SI NO ESTÁ LOGUEADO -->
+<div id="modal-acceso" class="modal-fondo" style="display: none;">
     <div class="modal-contenido">
         <h2>Bienvenido a VivaPanamá</h2>
-        <p>Elige cómo deseas continuar</p>
+        <p>Para ver detalles de hoteles y crear itinerarios, necesitas una cuenta</p>
 
-        <button class="btn primario" onclick="irRegistro()">Registrarme</button>
-        <button class="btn secundario" onclick="continuarInvitado()">Continuar como invitado</button>
+        <button class="btn primario" onclick="irRegistro()">Crear Cuenta</button>
+        <button class="btn secundario" onclick="irLogin()">Iniciar Sesión</button>
+        <button class="btn" onclick="continuarInvitado()">Continuar como invitado</button>
     </div>
 </div>
 
+<script>
+// Funciones para redirección
+function irRegistro() {
+    window.location.href = "registro.html";
+}
+
+function irLogin() {
+    window.location.href = "login.html";
+}
+
+function continuarInvitado() {
+    document.getElementById('modal-acceso').style.display = 'none';
+    // Cargar solo vista previa de hoteles (sin detalles)
+    cargarHotelesPreview();
+}
+
+// Función para ver hoteles (verifica login)
+function verHoteles() {
+    if (isLoggedIn()) {
+        window.location.href = "hoteles.html";
+    } else {
+        mostrarModalAcceso();
+    }
+}
+
+// Función para ver itinerario (verifica login)
+function verItinerario() {
+    if (isLoggedIn()) {
+        window.location.href = "itinerario.html";
+    } else {
+        mostrarModalAcceso();
+    }
+}
+
+// Función para ver perfil (verifica login)
+function verPerfil() {
+    if (isLoggedIn()) {
+        window.location.href = "perfil.html";
+    } else {
+        mostrarModalAcceso();
+    }
+}
+
+// Mostrar modal de acceso
+function mostrarModalAcceso() {
+    document.getElementById('modal-acceso').style.display = 'flex';
+}
+
+// Cargar vista previa de hoteles (sin detalles completos)
+function cargarHotelesPreview() {
+    const contenedor = document.getElementById('contenedor-hoteles');
+    contenedor.innerHTML = `
+        <div class="card">
+            <div class="info">
+                <h3>Hotel Ejemplo</h3>
+                <p>Hermosa vista al mar. Desde $120/noche</p>
+                <button class="btn-ver" onclick="verHoteles()">Ver más hoteles</button>
+            </div>
+        </div>
+        <p class="info-texto">Inicia sesión para ver detalles completos, precios y disponibilidad</p>
+    `;
+}
+
+// Al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    // Actualizar navbar según estado de login
+    updateNavbar();
+    
+    // Si no está logueado, mostrar modal después de 2 segundos
+    if (!isLoggedIn()) {
+        setTimeout(() => {
+            mostrarModalAcceso();
+        }, 2000);
+        
+        // Cargar vista previa de hoteles
+        cargarHotelesPreview();
+    } else {
+        // Si está logueado, cargar hoteles completos
+        cargarHotelesCompletos();
+    }
+});
+
+// Función para cargar hoteles completos (con login)
+function cargarHotelesCompletos() {
+    const contenedor = document.getElementById('contenedor-hoteles');
+    contenedor.innerHTML = '<p>Cargando hoteles...</p>';
+    
+    // AQUÍ VA TU LLAMADA A LA API PARA HOTELES
+    // Ejemplo:
+    /*
+    fetch('http://localhost:5134/api/Hoteles')
+        .then(response => response.json())
+        .then(data => {
+            // Mostrar los hoteles
+            let html = '';
+            data.forEach(hotel => {
+                html += `
+                <div class="card">
+                    <img src="${hotel.imagen}" alt="${hotel.nombre}">
+                    <div class="info">
+                        <h3>${hotel.nombre}</h3>
+                        <p>${hotel.descripcion}</p>
+                        <p><strong>Precio: $${hotel.precio_noche}/noche</strong></p>
+                        <button class="btn-ver" onclick="verDetalleHotel(${hotel.id})">
+                            Ver Detalles y Reservar
+                        </button>
+                    </div>
+                </div>`;
+            });
+            contenedor.innerHTML = html;
+        })
+        .catch(error => {
+            contenedor.innerHTML = '<p>Error al cargar hoteles</p>';
+        });
+    */
+}
+</script>
+</body>
 </html>

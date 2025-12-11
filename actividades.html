@@ -5,96 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actividades - VivaPanama</title>
     <link rel="stylesheet" href="css/estilo.css">
-
-    <style>
-        .titulo-provincia {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 2rem;
-            color: #0D3B66;
-        }
-
-        .grid-actividades {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 40px;
-        }
-
-        .actividad-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
-            overflow: hidden;
-            transition: 0.2s ease;
-        }
-
-        .actividad-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .actividad-img {
-            width: 100%;
-            height: 170px;
-            object-fit: cover;
-        }
-
-        .actividad-info {
-            padding: 15px;
-        }
-
-        .actividad-info h3 {
-            color: #0D3B66;
-            margin-bottom: 5px;
-        }
-
-        .actividad-info p {
-            margin: 4px 0;
-            color: #444;
-            font-size: 0.92rem;
-        }
-
-        .btn-agregar {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: #0D3B66;
-            text-align: center;
-            color: white;
-            border: none;
-            margin-top: 10px;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: 0.2s;
-        }
-
-        .btn-agregar:hover {
-            background: #092e4f;
-        }
-    </style>
+    <link rel="stylesheet" href="css/actividades.css">
 </head>
 
 <body>
+    <header class="navbar">
+        <div class="logo">VivaPanama</div>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="lugares.html">Lugares</a>
+            <a href="#">Explorar</a>
+            <a href="#">Itinerario</a>
+            <a href="#">Mi Perfil</a>
+        </nav>
+    </header>
 
-<header class="navbar">
-    <div class="logo">VivaPanama</div>
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="lugares.html">Lugares</a>
-        <a href="#">Explorar</a>
-        <a href="#">Itinerario</a>
-        <a href="#">Mi Perfil</a>
-    </nav>
-</header>
+    <h1 class="titulo-provincia" id="titulo-provincia"></h1>
 
-<h1 class="titulo-provincia" id="titulo-provincia"></h1>
+    <section class="grid-actividades" id="lista-actividades"></section>
 
-<section class="grid-actividades" id="lista-actividades"></section>
+    <footer>
+        © 2025 VivaPanamá – Todos los derechos reservados
+    </footer>
 
-<footer>
-    © 2025 VivaPanamá – Todos los derechos reservados
-</footer>
-
-<script src="js/actividades.js"></script>
+    <script src="js/actividades.js"></script>
 </body>
 </html>

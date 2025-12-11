@@ -89,7 +89,7 @@
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* FOOTER */
+
 footer {
     background-color: #0D3B66;
     color: white;
@@ -98,9 +98,7 @@ footer {
     margin-top: 40px;
 }
 
-/* ===============================
-   MODAL INICIO / INVITADO
-   =============================== */
+
 .modal-fondo {
     position: fixed;
     top: 0;
