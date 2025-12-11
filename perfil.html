@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Mi Perfil - VivaPanamá</title>
+
+    <!-- 🔗 CSS externo -->
+    <link rel="stylesheet" href="css/perfil.css">
+</head>
+
+<body>
+
+<div class="perfil-container">
+    <h2>Mi Perfil</h2>
+
+    <label>Nombre:</label>
+    <input id="nombre" type="text">
+
+    <label>Email:</label>
+    <input id="email" type="email">
+
+    <label>Cédula / Pasaporte:</label>
+    <input id="cedula" type="text">
+
+    <label>Edad:</label>
+    <input id="edad" type="number">
+
+    <label>Nueva contraseña (opcional):</label>
+    <input id="password" type="password" placeholder="Dejar vacío si no desea cambiar">
+
+    <button onclick="actualizarPerfil()">Guardar Cambios</button>
+
+    <div id="mensaje"></div>
+</div>
+<script src="/js/perfil.js"></script>
+
+</body>
+</html>

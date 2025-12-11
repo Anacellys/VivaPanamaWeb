@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lugares - VivaPanama</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+
+<body class="bg-main">
+
+<header class="navbar">
+    <div class="logo">VivaPanama</div>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="lugares.html" class="active">Lugares</a>
+        <a href="#">Explorar</a>
+        <a href="#">Itinerario</a>
+        <a href="#">Mi Perfil</a>
+    </nav>
+</header>
+
+<!-- =============================
+     HERO SUPERIOR TURÍSTICO REAL
+     ============================= -->
+<section class="hero-lugares">
+    <div class="hero-content">
+        <h1 class="hero-title">Descubre Panamá</h1>
+        <p class="hero-subtitle">Un país lleno de cultura, historia, naturaleza y playas paradisíacas.</p>
+    </div>
+</section>
+
+<!-- =============================
+     BLOQUE COMPLETO DE PROVINCIAS
+     ============================= -->
+<section class="prov-section">
+
+    <h2 class="prov-title">Provincias que te enamorarán</h2>
+    <p class="prov-sub">Explora experiencias únicas en cada región del país.</p>
+
+    <div class="prov-container">
+
+        <div class="prov-card" onclick="abrirProvincia('Panamá')">
+            <img src="img/provincias/Panama1.jpg" alt="Panamá">
+            <div class="prov-info">
+                <h3>Panamá</h3>
+                <p>La vibrante capital llena de historia, cultura y modernidad.</p>
+            </div>
+        </div>
+
+        <div class="prov-card" onclick="abrirProvincia('Chiriquí')">
+            <img src="img/provincias/Chiriquí1.jpg" alt="Chiriquí">
+            <div class="prov-info">
+                <h3>Chiriquí</h3>
+                <p>Montañas, clima fresco, senderismo y paisajes impresionantes.</p>
+            </div>
+        </div>
+
+        <div class="prov-card" onclick="abrirProvincia('Bocas del Toro')">
+            <img src="img/provincias/bocasdeltoro1.jpg" alt="Bocas del Toro">
+            <div class="prov-info">
+                <h3>Bocas del Toro</h3>
+                <p>Playas cristalinas, vida marina y ambiente caribeño.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =============================
+     BANNER TURÍSTICO INFERIOR
+     ============================= -->
+<section class="banner-turistico">
+    <img src="img/turismo/banner-playa.jpg" alt="Playa panorámica">
+    <div class="banner-text">
+        <h2>Panamá te espera</h2>
+        <p>Prepara tu itinerario y vive una experiencia inolvidable.</p>
+    </div>
+</section>
+
+<footer>
+    © 2025 VivaPanamá – Todos los derechos reservados
+</footer>
+
+<script>
+function abrirProvincia(nombre) {
+    const url = "actividades.html?provincia=" + encodeURIComponent(nombre);
+    window.location.href = url;
+}
+</script>
+
+</body>
+</html>
