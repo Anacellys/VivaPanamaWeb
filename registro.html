@@ -109,18 +109,19 @@ async function registrar() {
     }
 
     try {
-        const resp = await fetch("http://localhost:5134/api/Usuarios/registrar", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                nombre_usuario: nombre,
-                password: pass,
-                email_usuario: email,
-                cedula_pasaporte: cedula,
-                edad_usuario: edad,
-                tipo_usuario: "cliente"
-            })
-        });
+        const resp = await fetch("https://localhost:7029/api/Usuarios/registrar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        nombre: nombre,
+        password: pass,
+        email: email,
+        cedula_pasaporte: cedula,
+        edad: parseInt(edad),
+        tipo_usuario: "cliente"
+    })
+});
+
 
         const text = await resp.text();
 

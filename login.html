@@ -104,7 +104,7 @@ async function iniciarSesion() {
     }
 
     try {
-       const respuesta = await fetch("http://localhost:5134/api/Usuarios/login", {
+    const respuesta = await fetch("https://localhost:7029/api/Usuarios/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -112,6 +112,7 @@ async function iniciarSesion() {
         password: password
     })
 });
+
 
 
 
@@ -134,7 +135,7 @@ async function iniciarSesion() {
             if (data.tipo_usuario.toLowerCase() === "admin") {
                 window.location.href = "panel_admin.html";
             } else {
-                window.location.href = "pagina_cliente.html";
+                window.location.href = "index.html";
             }
         }, 1500);
 

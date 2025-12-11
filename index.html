@@ -4,19 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VivaPanama</title>
-    <link rel="stylesheet" href="css/estilo.css"> 
-    <script src="eee.js"></script>
+    <link rel="stylesheet" href="css/estilo.css">
 </head>
+
 <body>
+
+<!-- POPUP LOGIN — AHORA EN EL LUGAR CORRECTO -->
+<div id="popup-login" class="popup-fondo" style="display:none;">
+    <div class="popup-contenido">
+        <h2>🔒 Acceso restringido</h2>
+        <p>Debes iniciar sesión para ver tu itinerario.</p>
+
+        <button class="btn primario" onclick="irLogin()">Iniciar sesión</button>
+        <button class="btn secundario" onclick="irRegistro()">Crear cuenta</button>
+        <button class="btn cerrar" onclick="cerrarPopup()">Cerrar</button>
+    </div>
+</div>
 
 <header class="navbar">
     <div class="logo">VivaPanama</div>
     <nav>
-        <a href="#">Inicio</a>
-        <a href="login.html">Lugares</a>
+        <a href="index.html">Inicio</a>
+        <a href="lugares.html">Lugares</a>
         <a href="#">Explorar</a>
-        <a href="#"> Ver Itinerario </a> 
-        <a href="#"> Mi Perfil </a>
+        <a href="#" onclick="accederItinerario()">Ver Itinerario</a>
+        <a href="login.html" id="link-login">Iniciar Sesión</a>
+        <a href="perfil.html" id="link-perfil" style="display:none;">Mi Perfil</a>
+        <a href="#" id="btn-logout" style="display:none;" onclick="logout()">Cerrar sesión</a>
     </nav>
 </header>
 
@@ -25,33 +39,30 @@
 </section>
 
 <section class="contenedor">
-   
-
     <div class="card">
-       <!--<img src="img/hotel2.jpg" alt="Hotel 2"> --> 
         <div class="info">
             <h3>Hotel ejem</h3>
             <p>Ambiente relajado y vista panorámica.</p>
         </div>
     </div>
-    <!--  aqui donde debe llamar desde la api para que carge los cuadro -->
-
-    
+</section>
 
 <footer>
     © 2025 VivaPanama – Todos los derechos reservados
 </footer>
 
-</body> 
-<!-- MODAL FLOTANTE -->
-<div id="modal-acceso" class="modal-fondo">
+<!-- MODAL ANTIGUO SI LO VAS A USAR -->
+<div id="modal-acceso" class="modal-fondo" style="display:none;">
     <div class="modal-contenido">
         <h2>Bienvenido a VivaPanamá</h2>
         <p>Elige cómo deseas continuar</p>
-
         <button class="btn primario" onclick="irRegistro()">Registrarme</button>
         <button class="btn secundario" onclick="continuarInvitado()">Continuar como invitado</button>
     </div>
 </div>
 
+<script src="js/index.js"></script>
+<script src="js/nav.js"></script>
+
+</body>
 </html>
