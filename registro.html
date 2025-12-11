@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - VivaPanamá</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #e9f3ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: white;
+            width: 380px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 {
+            color: #0077b6;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #0077b6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #005f8c;
+        }
+
+        .error {
+            color: #d00000;
+            margin-top: 10px;
+        }
+
+        .success {
+            color: #2a9d8f;
+            margin-top: 10px;
+        }
+
+        a {
+            color: #0077b6;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="form-container">
+    <h2>Crear Cuenta</h2>
+
+    <input type="text" id="nombre_usuario" placeholder="Nombre de usuario">
+    <input type="password" id="password" placeholder="Contraseña">
+    <input type="email" id="email" placeholder="Correo electrónico">
+    <input type="text" id="cedula" placeholder="Cédula o pasaporte">
+    <input type="number" id="edad" placeholder="Edad">
+
+    <button onclick="registrar()">Registrarse</button>
+
+    <div id="mensaje"></div>
+
+    <div style="margin-top: 15px;">
+        ¿Ya tienes cuenta?
+        <a href="login.html">Inicia sesión</a>
+    </div>
+</div>
+
+<script>
+async function registrar() {
+    const nombre = document.getElementById("nombre_usuario").value.trim();
+    const pass = document.getElementById("password").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const cedula = document.getElementById("cedula").value.trim();
+    const edad = document.getElementById("edad").value.trim();
+    const mensaje = document.getElementById("mensaje");
+
+    mensaje.innerHTML = "";
+    mensaje.className = "";
+
+    if (!nombre || !pass) {
+        mensaje.innerHTML = "Nombre de usuario y contraseña son obligatorios.";
+        mensaje.className = "error";
+        return;
+    }
+
+    try {
+        const resp = await fetch("http://localhost:5134/api/Usuarios/registrar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                nombre_usuario: nombre,
+                password: pass,
+                email_usuario: email,
+                cedula_pasaporte: cedula,
+                edad_usuario: edad,
+                tipo_usuario: "cliente"
+            })
+        });
+
+        const text = await resp.text();
+
+        if (!resp.ok) {
+            mensaje.innerHTML = text;
+            mensaje.className = "error";
+            return;
+        }
+
+        mensaje.innerHTML = "Registro exitoso. Redirigiendo...";
+        mensaje.className = "success";
+
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1500);
+
+    } catch (error) {
+        mensaje.innerHTML = "Error al conectar con la API.";
+        mensaje.className = "error";
+    }
+}
+</script>
+
+</body>
+</html>

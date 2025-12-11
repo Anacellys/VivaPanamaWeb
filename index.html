@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VivaPanama</title>
-    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/estilo.css"> 
+    <script src="eee.js"></script>
 </head>
 <body>
 
@@ -12,7 +13,7 @@
     <div class="logo">VivaPanama</div>
     <nav>
         <a href="#">Inicio</a>
-        <a href="#">Lugares</a>
+        <a href="login.html">Lugares</a>
         <a href="#">Explorar</a>
         <a href="#"> Ver Itinerario </a> 
         <a href="#"> Mi Perfil </a>
@@ -41,5 +42,16 @@
     © 2025 VivaPanama – Todos los derechos reservados
 </footer>
 
-</body>
+</body> 
+<!-- MODAL FLOTANTE -->
+<div id="modal-acceso" class="modal-fondo">
+    <div class="modal-contenido">
+        <h2>Bienvenido a VivaPanamá</h2>
+        <p>Elige cómo deseas continuar</p>
+
+        <button class="btn primario" onclick="irRegistro()">Registrarme</button>
+        <button class="btn secundario" onclick="continuarInvitado()">Continuar como invitado</button>
+    </div>
+</div>
+
 </html>

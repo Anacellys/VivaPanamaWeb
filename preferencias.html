@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Preferencias del Viajero - VivaPanama</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <style>
+        .encuesta {
+            max-width: 650px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #0D3B66;
+            margin-bottom: 20px;
+        }
+
+        .pregunta {
+            margin-bottom: 22px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #0D3B66;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 6px;
+            border: 1px solid #aaa;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0D3B66;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #092e4f;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">VivaPanama</div>
+</header>
+
+<section class="encuesta">
+    <h2>Queremos conocerte mejor</h2>
+
+    <!-- PRESUPUESTO -->
+    <div class="pregunta">
+        <label>Presupuesto máximo por día (USD):</label>
+        <input type="number" id="presupuesto" placeholder="Ej: 70">
+    </div>
+
+    <!-- TIPO DE VIAJERO -->
+    <div class="pregunta">
+        <label>¿Qué tipo de viajero eres?</label>
+        <select id="tipo_viajero">
+            <option value="">Seleccione...</option>
+            <option value="aventura">Aventura</option>
+            <option value="relax">Relax</option>
+            <option value="cultural">Explorador cultural</option>
+            <option value="gastronomico">Gastronómico</option>
+            <option value="playa">Amante de playas</option>
+            <option value="naturaleza">Naturaleza</option>
+            <option value="familiar">Familiar</option>
+        </select>
+    </div>
+
+    <!-- INTERESES -->
+    <div class="pregunta">
+        <label>¿Cuáles son tus principales intereses?</label>
+        <textarea id="intereses" placeholder="Ej: playas, senderismo, gastronomía, cultura"></textarea>
+        <small>Separa múltiples intereses con comas</small>
+    </div>
+
+    <!-- NIVEL ACTIVIDAD -->
+    <div class="pregunta">
+        <label>Nivel de actividad preferido:</label>
+        <select id="nivel_actividad">
+            <option value="">Seleccione...</option>
+            <option value="tranquilo">Tranquilo</option>
+            <option value="moderado">Moderado</option>
+            <option value="intenso">Intenso</option>
+        </select>
+    </div>
+
+    <!-- TIPO ALOJAMIENTO -->
+    <div class="pregunta">
+        <label>Tipo de alojamiento preferido:</label>
+        <select id="alojamiento">
+            <option value="">Seleccione...</option>
+            <option value="hotel">Hotel</option>
+            <option value="hostal">Hostal</option>
+            <option value="eco-lodge">Eco-Lodge</option>
+            <option value="resort">Resort</option>
+            <option value="cabana">Cabaña</option>
+            <option value="airbnb">Airbnb</option>
+        </select>
+    </div>
+
+    <button onclick="guardarPreferencias()">Guardar preferencias</button>
+</section>
+
+<script>
+async function guardarPreferencias() {
+    const data = {
+        id_usuario: localStorage.getItem("idUsuario"),  
+        presupuesto_maximo: document.getElementById("presupuesto").value,
+        tipo_viajero: document.getElementById("tipo_viajero").value,
+        intereses: document.getElementById("intereses").value,
+        nivel_actividad: document.getElementById("nivel_actividad").value,
+        tipo_alojamiento_preferido: document.getElementById("alojamiento").value
+    };
+
+    const respuesta = await fetch("http://185.202.239.31:5000/api/preferencias_usuario", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+
+    if (respuesta.ok) {
+        alert("Preferencias guardadas correctamente");
+        window.location.href = "index.html";
+    } else {
+        alert("Error al guardar preferencias");
+    }
+}
+</script>
+
+</body>
+</html>

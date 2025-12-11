@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VivaPanama</title>
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <style>
+        /* ========= HERO ========= */
+        .hero {
+            height: 380px;
+            background-image: url("img/hero.jpg"); /* ← Cambiar imagen aquí */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 0px 3px 10px rgba(0,0,0,0.5);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+        }
+
+        /* ========= NUEVA SECCIÓN DE BIENVENIDA ========= */
+        .bienvenida {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .bienvenida h2 {
+            color: #0D3B66;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .bienvenida p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* ========= SECCIÓN DE CATEGORÍAS ========= */
+        .categorias {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        .cat-card {
+            width: 280px;
+            height: 160px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .cat-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(70%);
+        }
+
+        .cat-card span {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* ========= CARD RECOMENDACIONES ========= */
+        .contenedor {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover; /* ← Aquí van imágenes desde API */
+        }
+
+        .card .info {
+            padding: 15px;
+        }
+
+        .card h3 {
+            color: #0D3B66;
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            color: #444;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.20);
+        }
+
+        footer {
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">VivaPanama</div>
+    <nav>
+        <a href="#">Inicio</a>
+        <a href="#">Lugares</a>
+        <a href="#">Explorar</a>
+        <a href="#">Itinerario</a>
+        <a href="#">Mi Perfil</a>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>Descubre Panamá</h1>
+    <p>Explora playas, montañas, historia, gastronomía y experiencias únicas adaptadas a tu estilo de viaje.</p>
+</section>
+
+<!-- SECCIÓN DE BIENVENIDA -->
+<section class="bienvenida">
+    <h2>Bienvenido a tu aventura personalizada</h2>
+    <p>Te recomendamos actividades y lugares según tus preferencias para que vivas el mejor viaje posible.</p>
+</section>
+
+<!-- CATEGORÍAS PRINCIPALES -->
+<section class="categorias">
+
+    <!-- Imagen 1: Lugares -->
+    <div class="cat-card">
+        <img src="img/categorias/lugares.jpg" alt="Lugares"> <!-- ← Cambiar imagen -->
+        <span>Lugares</span>
+    </div>
+
+    <!-- Imagen 2: Hoteles -->
+    <div class="cat-card">
+        <img src="img/categorias/hoteles.jpg" alt="Hoteles"> <!-- ← Cambiar imagen -->
+        <span>Hoteles</span>
+    </div>
+
+    <!-- Imagen 3: Restaurantes -->
+    <div class="cat-card">
+        <img src="img/categorias/restaurantes.jpg" alt="Restaurantes"> <!-- ← Cambiar imagen -->
+        <span>Restaurantes</span>
+    </div>
+
+</section>
+
+<!-- SECCIÓN DE RECOMENDACIONES: AÚN VACÍA PARA LLENAR POR API -->
+<section class="contenedor" id="contenedor-recomendaciones">
+
+    <!-- Ejemplo de card -->
+    <!-- Este bloque se rellenará dinámicamente -->
+    <!-- 
+    <div class="card">
+        <img src="img/hotel_ejemplo.jpg" alt="Hotel Ejemplo">
+        <div class="info">
+            <h3>Hotel Ejemplo</h3>
+            <p>Descripción del hotel o lugar.</p>
+        </div>
+    </div>
+    -->
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    © 2025 VivaPanamá – Todos los derechos reservados
+</footer>
+
+<script>
+// LLENAR RECOMENDACIONES DESDE API
+async function cargarRecomendaciones() {
+    const cont = document.getElementById("contenedor-recomendaciones");
+
+    // Llamada de ejemplo — cambiar por tu endpoint real:
+    const res = await fetch("http://185.202.239.31:5000/api/hotel");
+    const datos = await res.json();
+
+    cont.innerHTML = "";
+
+    datos.forEach(item => {
+        cont.innerHTML += `
+            <div class="card">
+                <img src="${item.imagenUrl}" alt="">
+                <div class="info">
+                    <h3>${item.nombre}</h3>
+                    <p>${item.descripcion}</p>
+                </div>
+            </div>
+        `;
+    });
+}
+
+cargarRecomendaciones();
+</script>
+
+</body>
+</html>
