@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const tablaBody = document.querySelector("#tabla-itinerario tbody");
     const itinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
 
@@ -16,6 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 </tr>
             `;
         });
+
+        tablaBody.innerHTML += `
+            <tr style="font-weight:bold; background-color:#f0f0f0;">
+                <td colspan="2">Total de actividades</td>
+                <td>${itinerario.length}</td>
+            </tr>
+        `;
     }
 });
 
