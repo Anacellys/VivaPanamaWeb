@@ -1,0 +1,84 @@
+
+
+body {
+    font-family: Arial, sans-serif;
+    background: #e9f3ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background: white;
+    width: 350px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.login-container h2 {
+    color: #0077b6;
+    margin-bottom: 20px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.login-container input:focus {
+    border-color: #0077b6;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background: #0077b6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.login-container button:hover {
+    background: #005f8c;
+}
+
+.error {
+    color: #d00000;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.success {
+    color: #2a9d8f;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.registro-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.registro-link a {
+    color: #0077b6;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.registro-link a:hover {
+    text-decoration: underline;
+}

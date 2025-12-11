@@ -3,74 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - VivaPanamá</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #e9f3ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .login-container {
-            background: white;
-            width: 350px;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-
-        h2 {
-            color: #0077b6;
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            outline: none;
-        }
-
-        input:focus {
-            border-color: #0077b6;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #0077b6;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background: #005f8c;
-        }
-
-        .error {
-            color: #d00000;
-            margin-top: 10px;
-        }
-
-        .success {
-            color: #2a9d8f;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/login.css">
+    
 </head>
 
-<body>
+<body class="bg-main">
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">VivaPanama</div>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="lugares.html">Lugares</a>
+        <a href="#">Explorar</a>
+        <a href="#" onclick="accederItinerario()">Ver Itinerario</a>
+        <a href="login.html" id="link-login">Iniciar Sesión</a>
+        <a href="perfil.html" id="link-perfil" style="display:none;">Mi Perfil</a>
+        <a href="#" id="btn-logout" style="display:none;" onclick="logout()">Cerrar sesión</a>
+    </nav>
+</header>
 
+<!-- FORMULARIO LOGIN -->
 <div class="login-container">
     <h2>Iniciar Sesión</h2>
 
@@ -80,71 +33,16 @@
     <button onclick="iniciarSesion()">Entrar</button>
 
     <div id="mensaje"></div>
-    <div style="margin-top: 15px;">
-    ¿No tienes cuenta?
-    <a href="registro.html" style="color: #0077b6; text-decoration: none; font-weight: bold;">
-        Regístrate aquí
-    </a>
+
+    <div class="registro-link">
+        ¿No tienes cuenta?
+        <a href="registro.html">Regístrate aquí</a>
+    </div>
 </div>
-</div>
 
-<script>
-async function iniciarSesion() {
-    const usuario = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const mensaje = document.getElementById("mensaje");
-
-    mensaje.innerHTML = "";
-    mensaje.className = "";
-
-    if (!usuario || !password) {
-        mensaje.innerHTML = "Todos los campos son obligatorios.";
-        mensaje.className = "error";
-        return;
-    }
-
-    try {
-    const respuesta = await fetch("https://localhost:7029/api/Usuarios/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-        nombre_usuario: usuario,
-        password: password
-    })
-});
-
-
-
-
-        if (!respuesta.ok) {
-            const errorTexto = await respuesta.text();
-            mensaje.innerHTML = errorTexto;
-            mensaje.className = "error";
-            return;
-        }
-
-        const data = await respuesta.json();
-        mensaje.innerHTML = "Login exitoso. Redirigiendo...";
-        mensaje.className = "success";
-
-        // Guardamos info en localStorage
-        localStorage.setItem("usuario", JSON.stringify(data));
-
-        // Redirección según el tipo_usuario
-        setTimeout(() => {
-            if (data.tipo_usuario.toLowerCase() === "admin") {
-                window.location.href = "panel_admin.html";
-            } else {
-                window.location.href = "index.html";
-            }
-        }, 1500);
-
-    } catch (error) {
-        mensaje.innerHTML = "Error al conectar con la API.";
-        mensaje.className = "error";
-    }
-}
-</script>
+<!-- ARCHIVOS JS -->
+<script src="js/auth.js"></script>
+<script src="js/login.js"></script>
 
 </body>
 </html>

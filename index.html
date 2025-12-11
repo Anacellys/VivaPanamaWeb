@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VivaPanama</title>
-    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/estilo.css"> 
+    <script src="js/auth.js"></script>
+    <script src="js/index.js" defer></script>
 </head>
 
-<body>
+<body class="bg-main">
 
 <!-- POPUP LOGIN — AHORA EN EL LUGAR CORRECTO -->
 <div id="popup-login" class="popup-fondo" style="display:none;">
@@ -34,17 +36,27 @@
     </nav>
 </header>
 
-<section class="hero">
-    Descubre Panamá
+<section class="hero-lugares">
+    <div class="hero-content">
+        <h1 class="hero-title">Descubre Panamá</h1>
+        <p class="hero-subtitle">Encuentra hoteles, restaurantes y actividades para tu viaje.</p>
+    </div>
 </section>
 
-<section class="contenedor">
-    <div class="card">
-        <div class="info">
-            <h3>Hotel ejem</h3>
-            <p>Ambiente relajado y vista panorámica.</p>
-        </div>
-    </div>
+<section class="prov-section">
+
+    <h2 class="prov-title">Hoteles</h2>
+    <p class="prov-sub">Encuentra hospedaje ideal para tu viaje.</p>
+    <div class="prov-container" id="contenedor-hoteles"></div>
+
+    <h2 class="prov-title">Restaurantes</h2>
+    <p class="prov-sub">Sabores únicos a lo largo del país.</p>
+    <div class="prov-container" id="contenedor-restaurantes"></div>
+
+    <h2 class="prov-title">Actividades</h2>
+    <p class="prov-sub">Aventuras para disfrutar.</p>
+    <div class="prov-container" id="contenedor-actividades"></div>
+
 </section>
 
 <footer>

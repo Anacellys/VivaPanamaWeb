@@ -89,7 +89,7 @@
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* FOOTER */
+
 footer {
     background-color: #0D3B66;
     color: white;
@@ -98,9 +98,7 @@ footer {
     margin-top: 40px;
 }
 
-/* ===============================
-   MODAL INICIO / INVITADO
-   =============================== */
+
 .modal-fondo {
     position: fixed;
     top: 0;
@@ -626,4 +624,12 @@ footer {
 @keyframes popupFade {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }

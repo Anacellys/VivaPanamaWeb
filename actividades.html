@@ -4,97 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actividades - VivaPanama</title>
+
     <link rel="stylesheet" href="css/estilo.css">
-
-    <style>
-        .titulo-provincia {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 2rem;
-            color: #0D3B66;
-        }
-
-        .grid-actividades {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 40px;
-        }
-
-        .actividad-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.12);
-            overflow: hidden;
-            transition: 0.2s ease;
-        }
-
-        .actividad-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .actividad-img {
-            width: 100%;
-            height: 170px;
-            object-fit: cover;
-        }
-
-        .actividad-info {
-            padding: 15px;
-        }
-
-        .actividad-info h3 {
-            color: #0D3B66;
-            margin-bottom: 5px;
-        }
-
-        .actividad-info p {
-            margin: 4px 0;
-            color: #444;
-            font-size: 0.92rem;
-        }
-
-        .btn-agregar {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: #0D3B66;
-            text-align: center;
-            color: white;
-            border: none;
-            margin-top: 10px;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: 0.2s;
-        }
-
-        .btn-agregar:hover {
-            background: #092e4f;
-        }
-    </style>
+    <script src="js/auth.js"></script>
+    <script src="js/actividades.js" defer></script>
 </head>
 
-<body>
+<body class="bg-main">
 
 <header class="navbar">
     <div class="logo">VivaPanama</div>
     <nav>
         <a href="index.html">Inicio</a>
         <a href="lugares.html">Lugares</a>
-        <a href="#">Explorar</a>
-        <a href="#">Itinerario</a>
-        <a href="#">Mi Perfil</a>
+        <a href="actividades.html" class="active">Actividades</a>
+        <a href="#" onclick="accederItinerario()">Itinerario</a>
+        <a href="login.html" id="link-login">Iniciar Sesión</a>
+        <a href="perfil.html" id="link-perfil" style="display:none;">Mi Perfil</a>
+        <a href="#" id="btn-logout" style="display:none;" onclick="logout()">Cerrar sesión</a>
     </nav>
 </header>
 
-<h1 class="titulo-provincia" id="titulo-provincia"></h1>
+<section class="hero-lugares">
+    <div class="hero-content">
+        <h1 id="titulo-provincia" class="hero-title">Actividades</h1>
+        <p class="hero-subtitle">Descubre experiencias increíbles.</p>
+    </div>
+</section>
 
-<section class="grid-actividades" id="lista-actividades"></section>
+<section class="prov-section">
+    <h2 id="subtitulo" class="prov-title">Actividades disponibles</h2>
+    <p class="prov-sub">Explora aventuras y experiencias únicas.</p>
+
+    <div class="prov-container" id="contenedor-actividades">
+        <!-- Aquí se cargan las actividades -->
+    </div>
+</section>
 
 <footer>
     © 2025 VivaPanamá – Todos los derechos reservados
 </footer>
 
-<script src="js/actividades.js"></script>
 </body>
 </html>
