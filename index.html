@@ -11,7 +11,6 @@
 
 <body class="bg-main">
 
-
 <div id="popup-login" class="popup-fondo" style="display:none;">
     <div class="popup-contenido">
         <h2> Acceso restringido</h2>
@@ -26,12 +25,11 @@
 <header class="navbar">
     <div class="logo">VivaPanama</div>
     <nav>
-        <a href="index.html">Inicio</a>
+        <a href="index.html" class="active">Inicio</a>
         <a href="lugares.html">Lugares</a>
-        <a href="#">Explorar</a>
-        <a href="#" onclick="accederItinerario()">Ver Itinerario</a>
+        <a href="actividades.html">Actividades</a>
+        <a href="itenerario.html" >Mi Itinerario</a>
         <a href="login.html" id="link-login">Iniciar Sesión</a>
-        <a href="perfil.html" id="link-perfil" style="display:none;">Mi Perfil</a>
         <a href="#" id="btn-logout" style="display:none;" onclick="logout()">Cerrar sesión</a>
     </nav>
 </header>
@@ -62,7 +60,6 @@
 <footer>
     © 2025 VivaPanama – Todos los derechos reservados
 </footer>
-
 
 <div id="modal-acceso" class="modal-fondo" style="display:none;">
     <div class="modal-contenido">
