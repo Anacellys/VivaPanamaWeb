@@ -5,43 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VivaPanama</title>
     <link rel="stylesheet" href="css/estilo.css"> 
-    <!-- Añadir auth.js -->
     <script src="js/auth.js"></script>
+    <script src="js/index.js" defer></script>
 </head>
-<body>
+
+<body class="bg-main">
 
 <header class="navbar">
     <div class="logo">VivaPanama</div>
     <nav id="nav-menu">
-        <a href="index.html">Inicio</a>
+        <a href="index.html" class="active">Inicio</a>
         <a href="lugares.html">Lugares</a>
-        <a href="actividades.html">Actividades</a>
-        <!-- Estos enlaces cambian según login -->
-        <a href="#" id="link-hoteles" onclick="verHoteles()">Hoteles</a>
-        <a href="#" id="link-itinerario" onclick="verItinerario()">Mi Itinerario</a>
-        <a href="#" id="link-perfil" onclick="verPerfil()">Mi Perfil</a>
-        <!-- Espacio para info de usuario (se llena con JS) -->
+        <a href="#" onclick="verItinerario()">Mi Itinerario</a>
         <span id="user-info"></span>
     </nav>
 </header>
 
-<section class="hero">
-    Descubre Panamá
+<section class="hero-lugares">
+    <div class="hero-content">
+        <h1 class="hero-title">Descubre Panamá</h1>
+        <p class="hero-subtitle">Encuentra hoteles, restaurantes y actividades para tu viaje.</p>
+    </div>
 </section>
 
-<section class="contenedor" id="contenedor-hoteles">
-    <!-- Aquí se cargarán los hoteles desde la API -->
+<section class="prov-section">
+
+    <h2 class="prov-title">Hoteles</h2>
+    <p class="prov-sub">Encuentra hospedaje ideal para tu viaje.</p>
+    <div class="prov-container" id="contenedor-hoteles"></div>
+
+    <h2 class="prov-title">Restaurantes</h2>
+    <p class="prov-sub">Sabores únicos a lo largo del país.</p>
+    <div class="prov-container" id="contenedor-restaurantes"></div>
+
+    <h2 class="prov-title">Actividades</h2>
+    <p class="prov-sub">Aventuras para disfrutar.</p>
+    <div class="prov-container" id="contenedor-actividades"></div>
+
 </section>
 
 <footer>
     © 2025 VivaPanama – Todos los derechos reservados
 </footer>
 
-<!-- MODAL FLOTANTE - SOLO SI NO ESTÁ LOGUEADO -->
-<div id="modal-acceso" class="modal-fondo" style="display: none;">
+<!-- MODAL -->
+<div id="modal-acceso" class="modal-fondo" style="display:none;">
     <div class="modal-contenido">
         <h2>Bienvenido a VivaPanamá</h2>
-        <p>Para ver detalles de hoteles y crear itinerarios, necesitas una cuenta</p>
+        <p>Para ver detalles completos debes iniciar sesión.</p>
 
         <button class="btn primario" onclick="irRegistro()">Crear Cuenta</button>
         <button class="btn secundario" onclick="irLogin()">Iniciar Sesión</button>
@@ -49,122 +60,5 @@
     </div>
 </div>
 
-<script>
-// Funciones para redirección
-function irRegistro() {
-    window.location.href = "registro.html";
-}
-
-function irLogin() {
-    window.location.href = "login.html";
-}
-
-function continuarInvitado() {
-    document.getElementById('modal-acceso').style.display = 'none';
-    // Cargar solo vista previa de hoteles (sin detalles)
-    cargarHotelesPreview();
-}
-
-// Función para ver hoteles (verifica login)
-function verHoteles() {
-    if (isLoggedIn()) {
-        window.location.href = "hoteles.html";
-    } else {
-        mostrarModalAcceso();
-    }
-}
-
-// Función para ver itinerario (verifica login)
-function verItinerario() {
-    if (isLoggedIn()) {
-        window.location.href = "itinerario.html";
-    } else {
-        mostrarModalAcceso();
-    }
-}
-
-// Función para ver perfil (verifica login)
-function verPerfil() {
-    if (isLoggedIn()) {
-        window.location.href = "perfil.html";
-    } else {
-        mostrarModalAcceso();
-    }
-}
-
-// Mostrar modal de acceso
-function mostrarModalAcceso() {
-    document.getElementById('modal-acceso').style.display = 'flex';
-}
-
-// Cargar vista previa de hoteles (sin detalles completos)
-function cargarHotelesPreview() {
-    const contenedor = document.getElementById('contenedor-hoteles');
-    contenedor.innerHTML = `
-        <div class="card">
-            <div class="info">
-                <h3>Hotel Ejemplo</h3>
-                <p>Hermosa vista al mar. Desde $120/noche</p>
-                <button class="btn-ver" onclick="verHoteles()">Ver más hoteles</button>
-            </div>
-        </div>
-        <p class="info-texto">Inicia sesión para ver detalles completos, precios y disponibilidad</p>
-    `;
-}
-
-// Al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-    // Actualizar navbar según estado de login
-    updateNavbar();
-    
-    // Si no está logueado, mostrar modal después de 2 segundos
-    if (!isLoggedIn()) {
-        setTimeout(() => {
-            mostrarModalAcceso();
-        }, 2000);
-        
-        // Cargar vista previa de hoteles
-        cargarHotelesPreview();
-    } else {
-        // Si está logueado, cargar hoteles completos
-        cargarHotelesCompletos();
-    }
-});
-
-// Función para cargar hoteles completos (con login)
-function cargarHotelesCompletos() {
-    const contenedor = document.getElementById('contenedor-hoteles');
-    contenedor.innerHTML = '<p>Cargando hoteles...</p>';
-    
-    // AQUÍ VA TU LLAMADA A LA API PARA HOTELES
-    // Ejemplo:
-    /*
-    fetch('http://localhost:5134/api/Hoteles')
-        .then(response => response.json())
-        .then(data => {
-            // Mostrar los hoteles
-            let html = '';
-            data.forEach(hotel => {
-                html += `
-                <div class="card">
-                    <img src="${hotel.imagen}" alt="${hotel.nombre}">
-                    <div class="info">
-                        <h3>${hotel.nombre}</h3>
-                        <p>${hotel.descripcion}</p>
-                        <p><strong>Precio: $${hotel.precio_noche}/noche</strong></p>
-                        <button class="btn-ver" onclick="verDetalleHotel(${hotel.id})">
-                            Ver Detalles y Reservar
-                        </button>
-                    </div>
-                </div>`;
-            });
-            contenedor.innerHTML = html;
-        })
-        .catch(error => {
-            contenedor.innerHTML = '<p>Error al cargar hoteles</p>';
-        });
-    */
-}
-</script>
 </body>
 </html>
