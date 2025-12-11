@@ -61,10 +61,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 function agregarItinerario(id, nombre) {
-   
+    // Recuperar lista del localStorage
     let itinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
 
-   
+    // Evitar duplicados
     if (!itinerario.some(a => a.id === id)) {
         itinerario.push({ id, nombre });
         localStorage.setItem("itinerario", JSON.stringify(itinerario));
