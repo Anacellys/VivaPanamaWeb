@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itinerario - VivaPanama</title>
+    <link rel="stylesheet" href="css/estilo.css"> 
+    <script src="js/auth.js"></script>
+    <script src="js/itinerario.js" defer></script>
+</head>
+
+<body class="bg-main">
+
+<div id="popup-login" class="popup-fondo" style="display:none;">
+    <div class="popup-contenido">
+        <h2> Acceso restringido</h2>
+        <p>Debes iniciar sesión para ver tu itinerario.</p>
+
+        <button class="btn primario" onclick="irLogin()">Iniciar sesión</button>
+        <button class="btn secundario" onclick="irRegistro()">Crear cuenta</button>
+        <button class="btn cerrar" onclick="cerrarPopup()">Cerrar</button>
+    </div>
+</div>
+
+<header class="navbar">
+    <div class="logo">VivaPanama</div>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="lugares.html">Lugares</a>
+        <a href="actividades.html">Actividades</a>
+        <a href="itinerario.html" class="active">Mi Itinerario</a>
+        <a href="login.html" id="link-login">Iniciar Sesión</a>
+        <a href="perfil.html" id="link-perfil" style="display:none;">Mi Perfil</a>
+        <a href="#" id="btn-logout" style="display:none;" onclick="logout()">Cerrar sesión</a>
+    </nav>
+</header>
+
+<section class="hero-lugares">
+    <div class="hero-content">
+        <h1 class="hero-title">Mi Itinerario</h1>
+        <p class="hero-subtitle">Tus actividades seleccionadas para el viaje.</p>
+    </div>
+</section>
+
+<section class="prov-section">
+    <h2 class="prov-title">Actividades en tu itinerario</h2>
+    <p class="prov-sub">Aquí encontrarás todas las actividades que agregaste.</p>
+
+    <div class="prov-container">
+        <table id="tabla-itinerario">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Actividad</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<footer>
+    © 2025 VivaPanama – Todos los derechos reservados
+</footer>
+
+<script src="js/intinerario.js"></script>
+</body>
+</html>

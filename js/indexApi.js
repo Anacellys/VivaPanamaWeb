@@ -20,44 +20,32 @@ function verItinerario() {
     else mostrarModalAcceso();
 }
 
-// ------------------ Tarjetas estilo lugares.html ------------------
+// ------------------ Cargar secciones robusta (solo nombre y precio) ------------------
 async function cargarSeccion(endpoint, contenedorId) {
     const cont = document.getElementById(contenedorId);
     cont.innerHTML = "<p>Cargando...</p>";
 
     try {
-        const res = await fetch(`${API}/${endpoint}`);
+        const res = await fetch(`${API}/Hoteles${endpoint}`);
         if (!res.ok) throw new Error("Error en API");
 
         const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) {
+            cont.innerHTML = "<p>No hay datos disponibles.</p>";
+            return;
+        }
 
         let html = "";
 
         data.slice(0, 6).forEach(item => {
-
-            const img = item.Imagenes?.url_imagen ||
-                        item.imagen_url ||
-                        item.url_imagen ||
-                        "img/default.jpg";
-
-            const nombre =
-                item.nombre ||
-                item.nombre_hotel ||
-                item.nombre_restaurante ||
-                "Sin nombre";
-
-            const descripcion =
-                item.descripcion ||
-                item.descripcion_hotel ||
-                item.descripcion_restaurante ||
-                "Sin descripción";
+            const nombre = item.nombre || item.nombre_hotel || "Sin nombre";
+            const precio = item.precio_noche !== undefined ? `$${item.precio_noche}` : "Precio no disponible";
 
             html += `
-                <div class="prov-card" onclick="verDetalle('${endpoint}', ${item.id})">
-                    <img src="${img}" alt="${nombre}">
+                <div class="prov-card" onclick="verDetalle('${endpoint}', ${item.id || 0})">
                     <div class="prov-info">
                         <h3>${nombre}</h3>
-                        <p>${descripcion.substring(0, 70)}...</p>
+                        <p>${precio}</p>
                     </div>
                 </div>
             `;
@@ -66,7 +54,8 @@ async function cargarSeccion(endpoint, contenedorId) {
         cont.innerHTML = html;
 
     } catch (err) {
-        cont.innerHTML = "<p>Error al cargar datos</p>";
+        console.error(err);
+        cont.innerHTML = "<p>Error al cargar datos.</p>";
     }
 }
 
@@ -75,22 +64,21 @@ function verDetalle(tipo, id) {
     window.location.href = `detalle.html?tipo=${tipo}&id=${id}`;
 }
 
-// ------------------ Preview invitados ------------------
+
 function cargarHotelesPreview() {
     const cont = document.getElementById('contenedor-hoteles');
 
     cont.innerHTML = `
         <div class="prov-card">
-            <img src="img/default.jpg">
             <div class="prov-info">
                 <h3>Hotel Ejemplo</h3>
-                <p>Inicia sesión para ver todos los hoteles.</p>
+                <p>Inicia sesión para ver precios reales.</p>
             </div>
         </div>
     `;
 }
 
-// ------------------ Inicio página ------------------
+
 document.addEventListener("DOMContentLoaded", () => {
     updateNavbar();
 

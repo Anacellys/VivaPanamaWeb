@@ -1,17 +1,11 @@
 const API = "https://localhost:7029/api/Actividades";
-const IMG_DEFAULT = "img/default.jpg";
+const IMG_DEFAULT = "img/defaut.jpg";
 
-// ===============================
-// LEER PARAMETRO DE LA URL
-// ===============================
 function getProvincia() {
     const params = new URLSearchParams(window.location.search);
     return params.get("provincia");
 }
 
-// ===============================
-// INICIO
-// ===============================
 document.addEventListener("DOMContentLoaded", async () => {
     const provincia = getProvincia();
     const titulo = document.getElementById("titulo-provincia");
@@ -31,7 +25,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const actividades = await res.json();
 
-        // FILTRAR POR PROVINCIA
         const filtradas = provincia
             ? actividades.filter(a => a.lugar.provincia === provincia)
             : actividades;
@@ -43,10 +36,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        // Renderizar actividades
         filtradas.forEach(a => {
             contenedor.innerHTML += `
-                <div class="prov-card" onclick="verActividad(${a.id_actividad})">
+                <div class="prov-card">
                     <img src="${IMG_DEFAULT}">
                     <div class="prov-info">
                         <h3>${a.nombre}</h3>
@@ -54,6 +46,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <p><strong>Costo:</strong> ${a.costo === 0 ? "Gratis" : "$" + a.costo}</p>
                         <p><strong>Horario:</strong> ${a.horario}</p>
                         <p><strong>Disponibilidad:</strong> ${a.disponibilidad}</p>
+                        <button onclick="agregarItinerario(${a.id_actividad}, '${a.nombre}')">
+                            Agregar al Itinerario
+                        </button>
                     </div>
                 </div>
             `;
@@ -64,9 +59,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-// ===============================
-// REDIRIGIR A DETALLE (opcional)
-// ===============================
-function verActividad(id) {
-    window.location.href = "actividad.html?id=" + id;
+
+function agregarItinerario(id, nombre) {
+   
+    let itinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
+
+   
+    if (!itinerario.some(a => a.id === id)) {
+        itinerario.push({ id, nombre });
+        localStorage.setItem("itinerario", JSON.stringify(itinerario));
+        alert(`${nombre} agregado al itinerario.`);
+    } else {
+        alert(`${nombre} ya está en tu itinerario.`);
+    }
 }
+
+
