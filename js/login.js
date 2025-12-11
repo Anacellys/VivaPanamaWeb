@@ -38,12 +38,10 @@ async function iniciarSesion() {
        
        
        setTimeout(() => {
-    localStorage.setItem("loggedIn", "true");
-    localStorage.setItem("userType", data.tipo_usuario.toLowerCase());
-    localStorage.setItem("userName", data.nombre_usuario);
-    
-      window.location.href = "index.html";
+    localStorage.setItem("usuario", JSON.stringify(data));
+    window.location.href = "index.html";
      }, 1500);
+
 
     } catch (error) {
         mensaje.innerHTML = "Error al conectar con la API.";
