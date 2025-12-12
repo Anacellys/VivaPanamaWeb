@@ -39,14 +39,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         filtradas.forEach(a => {
             contenedor.innerHTML += `
                 <div class="prov-card">
-                    <img src="${IMG_DEFAULT}">
+                     <img src="${a.imagen || IMG_DEFAULT}">
                     <div class="prov-info">
                         <h3>${a.nombre}</h3>
                         <p>${a.descripcion}</p>
                         <p><strong>Costo:</strong> ${a.costo === 0 ? "Gratis" : "$" + a.costo}</p>
                         <p><strong>Horario:</strong> ${a.horario}</p>
                         <p><strong>Disponibilidad:</strong> ${a.disponibilidad}</p>
-                        <button onclick="agregarItinerario(${a.id_actividad}, '${a.nombre}')">
+                        <button class="btn-itinerario" onclick="agregarItinerario(${a.id_actividad}, '${a.nombre}', ${a.costo})"> 
                             Agregar al Itinerario
                         </button>
                     </div>
@@ -59,19 +59,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-
-function agregarItinerario(id, nombre) {
-    // Recuperar lista del localStorage
+function agregarItinerario(id, nombre, costo) {  
     let itinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
 
-    // Evitar duplicados
     if (!itinerario.some(a => a.id === id)) {
-        itinerario.push({ id, nombre });
+        itinerario.push({ id, nombre, costo });   
         localStorage.setItem("itinerario", JSON.stringify(itinerario));
-        alert(`${nombre} agregado al itinerario.`);
+        showToast(`${nombre} agregado al itinerario`);
     } else {
-        alert(`${nombre} ya está en tu itinerario.`);
+        showToast(`${nombre}  ya esta agregado al itinerario`);
+
     }
 }
+
+function showToast(mensaje) {
+    const toast = document.getElementById("toast");
+    toast.textContent = mensaje;
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 3000);
+}
+
 
 
