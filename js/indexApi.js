@@ -21,42 +21,60 @@ function verItinerario() {
 }
 
 // ------------------ Cargar secciones robusta (solo nombre y precio) ------------------
-async function cargarSeccion(endpoint, contenedorId) {
-    const cont = document.getElementById(contenedorId);
-    cont.innerHTML = "<p>Cargando...</p>";
+async function cargarSeccion(recurso, contenedorId) {
+const API_HOTELES = "https://localhost:7029/api/Hoteles";
 
-    try {
-        const res = await fetch(`${API}/Hoteles${endpoint}`);
-        if (!res.ok) throw new Error("Error en API");
+// --------- helper login ----------
+function isLoggedIn() {
+  return !!localStorage.getItem("usuario");
+}
 
-        const data = await res.json();
-        if (!Array.isArray(data) || data.length === 0) {
-            cont.innerHTML = "<p>No hay datos disponibles.</p>";
-            return;
-        }
+// --------- cargar hoteles (solo cuando está logeado) ----------
+async function cargarHotelesInicio() {
+  const cont = document.getElementById("contenedor-hotel");
+  if (!cont) return;
 
-        let html = "";
+  cont.innerHTML = "<p>Cargando hoteles...</p>";
 
-        data.slice(0, 6).forEach(item => {
-            const nombre = item.nombre || item.nombre_hotel || "Sin nombre";
-            const precio = item.precio_noche !== undefined ? `$${item.precio_noche}` : "Precio no disponible";
+  try {
+    const res = await fetch(API_HOTELES);
+    if (!res.ok) throw new Error("Error en API Hoteles");
 
-            html += `
-                <div class="prov-card" onclick="verDetalle('${endpoint}', ${item.id || 0})">
-                    <div class="prov-info">
-                        <h3>${nombre}</h3>
-                        <p>${precio}</p>
-                    </div>
-                </div>
-            `;
-        });
+    const data = await res.json();
 
-        cont.innerHTML = html;
+    // adapta a tu JSON real
+    const lista = data.Hoteles || data.hoteles || data || [];
 
-    } catch (err) {
-        console.error(err);
-        cont.innerHTML = "<p>Error al cargar datos.</p>";
+    if (!Array.isArray(lista) || lista.length === 0) {
+      cont.innerHTML = "<p>No hay hoteles disponibles.</p>";
+      return;
     }
+
+    let html = "";
+
+    lista.slice(0, 6).forEach(h => {
+      const nombre = h.nombre_hotel || h.nombre || "Hotel sin nombre";
+      const precio =
+        h.precio_noche !== undefined
+          ? `$${h.precio_noche}`
+          : "Precio no disponible";
+
+      html += `
+        <div class="prov-card" onclick="verDetalle('Hoteles', ${h.id_hotel || h.id || 0})">
+          <div class="prov-info">
+            <h3>${nombre}</h3>
+            <p>${precio}</p>
+          </div>
+        </div>
+      `;
+    });
+
+    cont.innerHTML = html;
+  } catch (err) {
+    console.error("Error cargando hoteles:", err);
+    cont.innerHTML = "<p>Error al cargar hoteles.</p>";
+  }
+}
 }
 
 // ------------------ Ver detalle ------------------
@@ -80,14 +98,14 @@ function cargarHotelesPreview() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    updateNavbar();
+  updateNavbar();
 
-    if (!isLoggedIn()) {
-        setTimeout(() => mostrarModalAcceso(), 1000);
-        cargarHotelesPreview();
-    } else {
-        cargarSeccion("Hoteles", "contenedor-hoteles");
-        cargarSeccion("Restaurantes", "contenedor-restaurantes");
-        cargarSeccion("Actividades", "contenedor-actividades");
-    }
+  if (!isLoggedIn()) {
+    setTimeout(() => mostrarModalAcceso(), 1000);
+    cargarHotelesPreview();
+  } else {
+    cargarSeccion("Hoteles", "contenedor-hoteles");
+    cargarSeccion("Restaurantes", "contenedor-restaurantes");
+    cargarSeccion("Actividades", "contenedor-actividades");
+  }
 });

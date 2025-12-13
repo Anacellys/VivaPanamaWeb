@@ -91,3 +91,45 @@ function showToast(mensaje) {
     toast.style.display = "none";
   }, 3000);
 }
+function getParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    provincia: params.get("provincia"),
+    idProvincia: params.get("idProvincia")
+  };
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const { provincia, idProvincia } = getParams();
+  const btnActividades = document.getElementById("btnVerActividades");
+
+  if (!btnActividades) return;
+
+ btnActividades.addEventListener("click", () => {
+  let url = "actividades.html";
+
+  const params = new URLSearchParams();
+  if (provincia) params.set("provincia", provincia);
+  if (idProvincia) params.set("idProvincia", idProvincia);
+
+  window.location.href = `${url}?${params.toString()}`;
+});
+  
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const { provincia, idProvincia } = getParams();
+  const btnRestaurantes = document.getElementById("btnVerRestaurantes");
+
+  if (!btnRestaurantes) return;
+
+ btnRestaurantes.addEventListener("click", () => {
+  let url = "restaurantes.html";
+
+  const params = new URLSearchParams();
+  if (provincia) params.set("provincia", provincia);
+  if (idProvincia) params.set("idProvincia", idProvincia);
+
+  window.location.href = `${url}?${params.toString()}`;
+});
+  
+});

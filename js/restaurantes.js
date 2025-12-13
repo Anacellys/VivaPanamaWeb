@@ -93,3 +93,46 @@ function agregarRestItinerario(id, nombre, costo) {
     showToast(`${nombre} ya está agregado al itinerario`);
   }
 }
+function getParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    provincia: params.get("provincia"),
+    idProvincia: params.get("idProvincia")
+  };
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const { provincia, idProvincia } = getParams();
+  const btnActividades = document.getElementById("btnVerActividades");
+
+  if (!btnActividades) return;
+
+ btnActividades.addEventListener("click", () => {
+  let url = "actividades.html";
+
+  const params = new URLSearchParams();
+  if (provincia) params.set("provincia", provincia);
+  if (idProvincia) params.set("idProvincia", idProvincia);
+
+  window.location.href = `${url}?${params.toString()}`;
+});
+  
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const { provincia, idProvincia } = getParams();
+  const btnHoteles = document.getElementById("btnVerHoteles");
+
+  if (!btnHoteles) return;
+
+ btnHoteles.addEventListener("click", () => {
+  let url = "hotel.html";
+
+  const params = new URLSearchParams();
+  if (provincia) params.set("provincia", provincia);
+  if (idProvincia) params.set("idProvincia", idProvincia);
+
+  window.location.href = `${url}?${params.toString()}`;
+});
+  
+});
+
