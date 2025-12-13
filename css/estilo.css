@@ -706,4 +706,39 @@ footer {
 .btn-eliminar:hover {
     background-color: #d62828;
 }
+.prov-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.btn-primario,
+.btn-secundario {
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: 1px solid #0D3B66;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.btn-primario {
+  background-color: #0D3B66;
+  color: #fff;
+}
+
+.btn-primario:hover {
+  background-color: #092e4f;
+}
+
+.btn-secundario {
+  background-color: #fff;
+  color: #0D3B66;
+}
+
+.btn-secundario:hover {
+  background-color: #0D3B66;
+  color: #fff;
+}
 

@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         contenedor.innerHTML = "<p>Error al cargar actividades.</p>";
     }
+    
 });
 
 function agregarItinerario(id, nombre, costo) {  
@@ -81,6 +82,50 @@ function showToast(mensaje) {
         toast.style.display = "none";
     }, 3000);
 }
+// -------- Navegar a hoteles --------
+
+function getParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    provincia: params.get("provincia"),
+    idProvincia: params.get("idProvincia")
+  };
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const { provincia, idProvincia } = getParams();
+  const btnHoteles = document.getElementById("btnVerHoteles");
+
+  if (!btnHoteles) return;
+
+ btnHoteles.addEventListener("click", () => {
+  let url = "hotel.html";
+
+  const params = new URLSearchParams();
+  if (provincia) params.set("provincia", provincia);
+  if (idProvincia) params.set("idProvincia", idProvincia);
+
+  window.location.href = `${url}?${params.toString()}`;
+});
+  
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const { provincia, idProvincia } = getParams();
+  const btnHoteles = document.getElementById("btnVerRestaurantes");
+
+  if (!btnHoteles) return;
+
+ btnHoteles.addEventListener("click", () => {
+  let url = "restaurantes.html";
+
+  const params = new URLSearchParams();
+  if (provincia) params.set("provincia", provincia);
+  if (idProvincia) params.set("idProvincia", idProvincia);
+
+  window.location.href = `${url}?${params.toString()}`;
+});
+  
+});
 
 
 
