@@ -31,11 +31,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await res.json();
     console.log("DATA RESTAURANTES:", data);
 
-    if (!data || !Array.isArray(data.Restaurantes)) {
+    // Ajustamos esta parte según el nombre de la propiedad de la API
+    if (!data || !Array.isArray(data.restaurantes)) {
       throw new Error("Formato inválido de la API");
     }
 
-    const restaurantes = data.Restaurantes;
+    const restaurantes = data.restaurantes;
 
     const filtrados = provincia
       ? restaurantes.filter(r => (r.Lugar || r.lugar)?.provincia === provincia)
@@ -81,6 +82,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     contenedor.innerHTML = "<p>Error al cargar restaurantes.</p>";
   }
 });
+
 
 function agregarRestItinerario(id, nombre, costo) {
   let itinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
