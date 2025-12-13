@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const costo = r.precio_promedio ?? 0;
       const hA = r.horario_apertura;
       const hC = r.horario_cierre;
-      
+
       contenedor.innerHTML += `
         <div class="prov-card">
           <img src="${imagenUrl}">
