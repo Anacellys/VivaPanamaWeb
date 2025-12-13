@@ -7,9 +7,24 @@
 
     <!-- 🔗 CSS externo -->
     <link rel="stylesheet" href="css/perfil.css">
+    <link rel="stylesheet" href="css/estilo.css">
+    <script src="js/nav.js"></script>
 </head>
 
+
 <body>
+    <header class="navbar">
+    <div class="logo">VivaPanama</div>
+    <nav>
+        <a href="index.html" class="active">Inicio</a>
+        <a href="lugares.html">Lugares</a>
+        <a href="actividades.html">Actividades</a>
+        <a href="#" onclick="accederItinerario()">Mi Itinerario</a>
+        <a href="login.html" id="link-login">Iniciar Sesión</a>
+        <a href="perfil.html" id="link-perfil" style="display:none;">Mi Perfil</a>
+        <a href="#" id="btn-logout" style="display:none;" onclick="logout()">Cerrar sesión</a>
+    </nav>
+</header>
 
 <div class="perfil-container">
     <h2>Mi Perfil</h2>
@@ -33,6 +48,7 @@
 
     <div id="mensaje"></div>
 </div>
+<script src="js/nav.js"></script>
 <script src="/js/perfil.js"></script>
 
 </body>

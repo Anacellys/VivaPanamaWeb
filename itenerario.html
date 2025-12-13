@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Itinerario - VivaPanama</title>
     <link rel="stylesheet" href="css/estilo.css"> 
-    <script src="js/auth.js"></script>
+    <script src="js/nav.js"></script>
     <script src="js/intinerario.js" defer></script> 
 
 <body class="bg-main">
@@ -24,10 +24,10 @@
 <header class="navbar">
     <div class="logo">VivaPanama</div>
     <nav>
-        <a href="index.html">Inicio</a>
+        <a href="index.html" class="active">Inicio</a>
         <a href="lugares.html">Lugares</a>
         <a href="actividades.html">Actividades</a>
-        <a href="itenerario.html" class="active">Mi Itinerario</a>
+        <a href="#" onclick="accederItinerario()">Mi Itinerario</a>
         <a href="login.html" id="link-login">Iniciar Sesión</a>
         <a href="perfil.html" id="link-perfil" style="display:none;">Mi Perfil</a>
         <a href="#" id="btn-logout" style="display:none;" onclick="logout()">Cerrar sesión</a>
@@ -59,7 +59,7 @@
             </tbody>
         </table>
 
-        <!-- ✔ BOTÓN ESTILIZADO, CORREGIDO -->
+
         <button class="guardar-btn" onclick="guardarItinerarioTXT()">Guardar Itinerario (.txt)</button>
     </div>
 </section>

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VivaPanama</title>
     <link rel="stylesheet" href="css/estilo.css"> 
-    <script src="js/auth.js"></script>
     <script src="js/index.js" defer></script>
 </head>
 
@@ -28,8 +27,9 @@
         <a href="index.html" class="active">Inicio</a>
         <a href="lugares.html">Lugares</a>
         <a href="actividades.html">Actividades</a>
-        <a href="itenerario.html" >Mi Itinerario</a>
+        <a href="#" onclick="accederItinerario()">Mi Itinerario</a>
         <a href="login.html" id="link-login">Iniciar Sesión</a>
+        <a href="perfil.html" id="link-perfil" style="display:none;">Mi Perfil</a>
         <a href="#" id="btn-logout" style="display:none;" onclick="logout()">Cerrar sesión</a>
     </nav>
 </header>

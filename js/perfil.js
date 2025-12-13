@@ -3,7 +3,7 @@ let usuarioActual = null;
 // ========================================
 // 🔹 Cargar datos del usuario
 // ========================================
-window.onload = function () {
+window.addEventListener("load", () => {
     usuarioActual = JSON.parse(localStorage.getItem("usuario"));
 
     if (!usuarioActual) {
@@ -16,7 +16,7 @@ window.onload = function () {
     document.getElementById("email").value = usuarioActual.email;
     document.getElementById("cedula").value = usuarioActual.cedula_pasaporte;
     document.getElementById("edad").value = usuarioActual.edad ?? "";
-};
+});
 
 // ========================================
 // 🔹 Enviar actualización al API
@@ -37,11 +37,14 @@ async function actualizarPerfil() {
     if (datos.password === "") delete datos.password;
 
     try {
-        const respuesta = await fetch(`https://localhost:7029/api/Usuarios/${usuarioActual.id_usuario}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(datos)
-        });
+        const respuesta = await fetch(
+            `https://localhost:7029/api/Usuarios/${usuarioActual.id_usuario}`,
+            {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(datos)
+            }
+        );
 
         if (!respuesta.ok) {
             const error = await respuesta.text();
@@ -53,6 +56,7 @@ async function actualizarPerfil() {
         mensaje.innerHTML = "Perfil actualizado correctamente ✔️";
         mensaje.className = "success";
 
+        // Actualizar datos locales
         usuarioActual = { ...usuarioActual, ...datos };
         localStorage.setItem("usuario", JSON.stringify(usuarioActual));
 
