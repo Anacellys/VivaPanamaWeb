@@ -1,36 +1,27 @@
-const API = "https://localhost:7029/api";
+// =========================
+//  CONSTANTES API
+// =========================
+const API_HOTELES      = "https://localhost:7029/api/Hoteles";
+const API_REST         = "https://localhost:7029/api/Restaurantes";
+const API_ACTIVIDADES  = "https://localhost:7029/api/Actividades";
 
-// ------------------ Redirecciones ------------------
-function irRegistro() { window.location.href = "registro.html"; }
-function irLogin() { window.location.href = "login.html"; }
+const IMG_HOTEL_DEFAULT = "img/defaut.jpg";
+const IMG_REST_DEFAULT  = "img/defaut_rest.jpg";
+const IMG_ACT_DEFAULT   = "img/defaut.jpg";
 
-// ------------------ Modal ------------------
-function mostrarModalAcceso() {
-    document.getElementById('modal-acceso').style.display = 'flex';
-}
+// =========================
+//  INICIALIZAR EN INDEX
+// =========================
+document.addEventListener("DOMContentLoaded", () => {
+  cargarHotelesHome();
+  cargarRestaurantesHome();
+  cargarActividadesHome();
+});
 
-function continuarInvitado() {
-    document.getElementById('modal-acceso').style.display = 'none';
-    cargarHotelesPreview();
-}
-
-// ------------------ Rutas protegidas ------------------
-function verItinerario() {
-    if (isLoggedIn()) window.location.href = "itinerario.html";
-    else mostrarModalAcceso();
-}
-
-// ------------------ Cargar secciones robusta (solo nombre y precio) ------------------
-async function cargarSeccion(recurso, contenedorId) {
-const API_HOTELES = "https://localhost:7029/api/Hoteles";
-
-// --------- helper login ----------
-function isLoggedIn() {
-  return !!localStorage.getItem("usuario");
-}
-
-// --------- cargar hoteles (solo cuando está logeado) ----------
-async function cargarHotelesInicio() {
+// =========================
+//  HOTELES (HOME)
+// =========================
+async function cargarHotelesHome() {
   const cont = document.getElementById("contenedor-hotel");
   if (!cont) return;
 
@@ -38,74 +29,174 @@ async function cargarHotelesInicio() {
 
   try {
     const res = await fetch(API_HOTELES);
-    if (!res.ok) throw new Error("Error en API Hoteles");
+    if (!res.ok) throw new Error("HTTP " + res.status);
 
-    const data = await res.json();
+    const hoteles = await res.json();
 
-    // adapta a tu JSON real
-    const lista = data.Hoteles || data.hoteles || data || [];
+    cont.innerHTML = "";
+    hoteles.slice(0, 2).forEach(h => {
+      const lugar   = h.Lugar || h.lugar;
+      const imgObj  = h.Imagenes || h.imagenes || null;
 
-    if (!Array.isArray(lista) || lista.length === 0) {
-      cont.innerHTML = "<p>No hay hoteles disponibles.</p>";
-      return;
-    }
+      const imagenUrl   = imgObj?.url_imagen || IMG_HOTEL_DEFAULT;
+      const nombreHotel = h.nombre_hotel || h.nombre;
+      const descripcion = h.descripcion_hotel || h.descripcion || "";
+      const costo       = h.precio_noche ?? h.precio ?? 0;
 
-    let html = "";
-
-    lista.slice(0, 6).forEach(h => {
-      const nombre = h.nombre_hotel || h.nombre || "Hotel sin nombre";
-      const precio =
-        h.precio_noche !== undefined
-          ? `$${h.precio_noche}`
-          : "Precio no disponible";
-
-      html += `
-        <div class="prov-card" onclick="verDetalle('Hoteles', ${h.id_hotel || h.id || 0})">
+      cont.innerHTML += `
+        <div class="prov-card">
+          <img src="${imagenUrl}">
           <div class="prov-info">
-            <h3>${nombre}</h3>
-            <p>${precio}</p>
+            <h3>${nombreHotel}</h3>
+            <p>${descripcion}</p>
+            <p><strong>Precio por noche:</strong> ${costo === 0 ? "Consultar" : "$" + costo}</p>
+            <button class="btn-itinerario"
+              onclick="agregarHotelItinerario(${h.id_hotel}, '${nombreHotel.replace(/'/g,"\\'")}', ${costo || 0})">
+              Agregar al Itinerario
+            </button>
           </div>
-        </div>
-      `;
+        </div>`;
     });
-
-    cont.innerHTML = html;
   } catch (err) {
-    console.error("Error cargando hoteles:", err);
+    console.error("Error hoteles home:", err);
     cont.innerHTML = "<p>Error al cargar hoteles.</p>";
   }
 }
-}
 
-// ------------------ Ver detalle ------------------
-function verDetalle(tipo, id) {
-    window.location.href = `detalle.html?tipo=${tipo}&id=${id}`;
-}
+// =========================
+//  RESTAURANTES (HOME)
+// =========================
+async function cargarRestaurantesHome() {
+  const cont = document.getElementById("contenedor-restaurantes");
+  if (!cont) return;
 
+  cont.innerHTML = "<p>Cargando restaurantes...</p>";
 
-function cargarHotelesPreview() {
-    const cont = document.getElementById('contenedor-hoteles');
+  try {
+    const res = await fetch(API_REST);
+    if (!res.ok) throw new Error("HTTP " + res.status);
 
-    cont.innerHTML = `
+    const data = await res.json();
+
+    // En tu página de restaurantes usas data.restaurantes
+    const restaurantes = Array.isArray(data.restaurantes) ? data.restaurantes : data;
+
+    cont.innerHTML = "";
+    restaurantes.slice(0, 2).forEach(r => {
+      const lugar  = r.Lugar || r.lugar;
+      const imgObj = r.ImagenPrincipal || r.imagenPrincipal;
+
+      const imagenUrl   = imgObj?.url || IMG_REST_DEFAULT;
+      const nombre      = r.nombre_restaurante;
+      const descripcion = r.descripcion_restaurante ?? "";
+      const costo       = r.precio_promedio ?? 0;
+
+      cont.innerHTML += `
         <div class="prov-card">
-            <div class="prov-info">
-                <h3>Hotel Ejemplo</h3>
-                <p>Inicia sesión para ver precios reales.</p>
-            </div>
-        </div>
-    `;
+          <img src="${imagenUrl}">
+          <div class="prov-info">
+            <h3>${nombre}</h3>
+            <p>${descripcion}</p>
+            <p><strong>Precio promedio:</strong> ${costo === 0 ? "Consultar" : "$" + costo}</p>
+            <button class="btn-itinerario"
+              onclick="agregarRestItinerario(${r.id_restaurante}, '${nombre.replace(/'/g,"\\'")}', ${costo || 0})">
+              Agregar al Itinerario
+            </button>
+          </div>
+        </div>`;
+    });
+  } catch (err) {
+    console.error("ERROR RESTAURANTES HOME:", err);
+    cont.innerHTML = "<p>Error al cargar restaurantes.</p>";
+  }
 }
 
+// =========================
+//  ACTIVIDADES (HOME)
+//  (basado en tu actividades.js)
+// =========================
+async function cargarActividadesHome() {
+  const cont = document.getElementById("contenedor-actividades");
+  if (!cont) return;
 
-document.addEventListener("DOMContentLoaded", () => {
-  updateNavbar();
+  cont.innerHTML = "<p>Cargando actividades...</p>";
 
-  if (!isLoggedIn()) {
-    setTimeout(() => mostrarModalAcceso(), 1000);
-    cargarHotelesPreview();
-  } else {
-    cargarSeccion("Hoteles", "contenedor-hoteles");
-    cargarSeccion("Restaurantes", "contenedor-restaurantes");
-    cargarSeccion("Actividades", "contenedor-actividades");
+  try {
+    const res = await fetch(API_ACTIVIDADES);
+    if (!res.ok) throw new Error("Error al cargar actividades");
+
+    const actividades = await res.json();
+
+    cont.innerHTML = "";
+    actividades.slice(0, 2).forEach(a => {
+      const imagenUrl = a.imagen || IMG_ACT_DEFAULT;
+
+      cont.innerHTML += `
+        <div class="prov-card">
+          <img src="${imagenUrl}">
+          <div class="prov-info">
+            <h3>${a.nombre}</h3>
+            <p>${a.descripcion}</p>
+            <p><strong>Costo:</strong> ${a.costo === 0 ? "Gratis" : "$" + a.costo}</p>
+            <button class="btn-itinerario"
+              onclick="agregarItinerario(${a.id_actividad}, '${a.nombre.replace(/'/g,"\\'")}', ${a.costo || 0})">
+              Agregar al Itinerario
+            </button>
+          </div>
+        </div>`;
+    });
+  } catch (err) {
+    console.error("Error actividades home:", err);
+    cont.innerHTML = "<p>Error al cargar actividades.</p>";
   }
-});
+}
+
+// =========================
+//  FUNCIONES COMUNES ITINERARIO
+// =========================
+function agregarHotelItinerario(id, nombre, costo) {
+  let itinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
+
+  if (!itinerario.some(e => e.id === id && e.tipo === "hotel")) {
+    itinerario.push({ id, nombre, costo, tipo: "hotel" });
+    localStorage.setItem("itinerario", JSON.stringify(itinerario));
+    showToast(`${nombre} agregado al itinerario`);
+  } else {
+    showToast(`${nombre} ya está agregado al itinerario`);
+  }
+}
+
+function agregarRestItinerario(id, nombre, costo) {
+  let itinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
+
+  if (!itinerario.some(e => e.id === id && e.tipo === "restaurante")) {
+    itinerario.push({ id, nombre, costo, tipo: "restaurante" });
+    localStorage.setItem("itinerario", JSON.stringify(itinerario));
+    showToast(`${nombre} agregado al itinerario`);
+  } else {
+    showToast(`${nombre} ya está agregado al itinerario`);
+  }
+}
+
+function agregarItinerario(id, nombre, costo) {
+  let itinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
+
+  if (!itinerario.some(e => e.id === id && e.tipo === "actividad")) {
+    itinerario.push({ id, nombre, costo, tipo: "actividad" });
+    localStorage.setItem("itinerario", JSON.stringify(itinerario));
+    showToast(`${nombre} agregado al itinerario`);
+  } else {
+    showToast(`${nombre} ya está agregado al itinerario`);
+  }
+}
+
+function showToast(mensaje) {
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+  toast.textContent = mensaje;
+  toast.style.display = "block";
+
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 3000);
+}
